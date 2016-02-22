@@ -1,7 +1,8 @@
 
 
 import de.bezier.guido.*;
-//Declare and initialize NUM_ROWS and NUM_COLS = 20
+public static final int NUM_COLS = 20; 
+public static final int NUM_ROWS = 20;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
 
@@ -12,9 +13,13 @@ void setup ()
     
     // make the manager
     Interactive.make( this );
-    
+    buttons = new MSButton [NUM_ROWS][NUM_COLS];
     //your code to declare and initialize buttons goes here
-    
+    for(int i = 0; i<NUM_ROWS.length; i++){
+       for (int j = 0; j<NUM_COLS.length; j++){
+          buttons[i][j] = new MSButton(i,j);
+       }
+    }
     
     
     setBombs();
