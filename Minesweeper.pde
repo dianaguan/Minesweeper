@@ -1,4 +1,3 @@
-
 import de.bezier.guido.*;
 public final static int NUM_ROWS = 20; 
 public final static int NUM_COLS = 20;
@@ -24,8 +23,8 @@ public void setup ()
 }
 public void setBombs()
 {
-    int row = (int)(Math.random()*20);
-    int col = (int)(Math.random()*20);
+    int row = (int)(Math.random()*NUM_ROWS);
+    int col = (int)(Math.random()*NUM_COLS);
     if(!bombs.contains(buttons[row][col])){
         bombs.add(buttons[row][col]);
         setBombs();
@@ -84,7 +83,30 @@ public class MSButton
     public void mousePressed () 
     {
         clicked = true;
-        //your code here
+        if(bombs.contains(this))
+            displayLosingMessage();
+        else if (countBombs(r,c)>0) {
+            setLabel(""+countBombs(r,c));
+        }
+        else
+        {
+            if(isValid(r,c-1) && !buttons[r][c-1].isClicked())
+                buttons[r][c-1].mousePressed();
+            if(isValid(r,c+1) && !buttons[r][c+1].isClicked())
+                buttons[r][c+1].mousePressed();
+            if(isValid(r-1,c) && !buttons[r-1][c].isClicked())
+                buttons[r-1][c].mousePressed();
+            if(isValid(r+1,c) && !buttons[r+1][c].isClicked())
+                buttons[r+1][c].mousePressed();
+            if(isValid(r+1,c+1) && !buttons[r+1][c+1].isClicked())
+                buttons[r+1][c+1].mousePressed();
+            if(isValid(r+1,c-1) && !buttons[r+1][c-1].isClicked())
+                buttons[r+1][c-1].mousePressed();
+            if(isValid(r-1,c+1) && !buttons[r-1][c+1].isClicked())
+                buttons[r-1][c+1].mousePressed();
+            if(isValid(r-1,c-1) && !buttons[r-1][c-1].isClicked())
+                buttons[r-1][c-1].mousePressed();
+        }    
     }
 
     public void draw () 
@@ -108,13 +130,41 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        //your code here
+        if(r<NUM_ROWS && r>=0 && c>=0 && c<NUM_COLS){
+            return true;
+      }
         return false;
     }
     public int countBombs(int row, int col)
     {
         int numBombs = 0;
         //your code here
+        if(bombs.contains(buttons[row+1][col]) && isValid(row+1,col)){
+            numBombs++;
+        }
+        if(bombs.contains(buttons[row-1][col]) && isValid(row-1,col)){
+            numBombs++;
+        }
+        if(bombs.contains(buttons[row][col-1]) && isValid(row,col-1)){
+            numBombs++;
+        }
+        if(bombs.contains(buttons[row][col+1]) && isValid(row,col+1)){
+            numBombs++;
+        }
+        if(bombs.contains(buttons[row+1][col+1]) && isValid(row+1,col+1)){
+            numBombs++;
+        }
+        if(bombs.contains(buttons[row-1][col-1]) && isValid(row-1,col-1)){
+            numBombs++;
+        }
+        if(bombs.contains(buttons[row+1][col-1]) && isValid(row+1,col-1)){
+            numBombs++;
+        }
+        if(bombs.contains(buttons[row-1][col+1]) && isValid(row-1,col+1)){
+            numBombs++;
+        }
+
+
         return numBombs;
     }
 }
